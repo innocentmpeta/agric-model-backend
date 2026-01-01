@@ -11,10 +11,16 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS
+# Configure CORS - EXPLICITLY allow your domain
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://gravitymodel.code7.co.za",
+        "http://gravitymodel.code7.co.za",
+        "https://www.gravitymodel.code7.co.za",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -34,7 +40,7 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))  # Use Railway's PORT
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
         "src.main:app",
         host="0.0.0.0",

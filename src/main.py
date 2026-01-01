@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.config import settings
 from src.api.routes import router
+import os
 
 # Create FastAPI application
 app = FastAPI(
@@ -33,9 +34,10 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
+    port = int(os.environ.get("PORT", 8000))  # Use Railway's PORT
     uvicorn.run(
         "src.main:app",
-        host=settings.API_HOST,
-        port=settings.API_PORT,
-        reload=settings.API_RELOAD
+        host="0.0.0.0",
+        port=port,
+        reload=False
     )
